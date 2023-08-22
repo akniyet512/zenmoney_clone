@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "899923775025",
+    "project_id": "testing-100b2",
+    "storage_bucket": "testing-100b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899923775025:android:49a37318c3053cd633cf10",
+        "android_client_info": {
+          "package_name": "com.example.zenmoney_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899923775025-26cm4n73f5gun3qmb1osvdr72ut8h101.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB61NhGxcSchFHb93WEXQfoGTp2Pe3PJzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899923775025-26cm4n73f5gun3qmb1osvdr72ut8h101.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "899923775025-0dg2cf0k97vl26043mfk0shrrt43ncim.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kz.medikart.web"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

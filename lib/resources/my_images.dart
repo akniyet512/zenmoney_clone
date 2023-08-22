@@ -1,3 +1,6 @@
 class MyImages {
-  static String logo = "assets/images/";
+  MyImages._();
+  
+  static String logo = "assets/images/zenmoney-icon.png";
+  static String googleLogo = "assets/images/google_icon.png";
 }

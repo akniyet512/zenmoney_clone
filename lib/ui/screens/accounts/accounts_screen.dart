@@ -10,7 +10,7 @@ class AccountsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.background,
       appBar: AppBar(
-        backgroundColor: MyColors.background,
+        backgroundColor: MyColors.secondaryBackground,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -58,16 +58,21 @@ class AccountsScreen extends StatelessWidget {
             Column(
               children: [
                 //section 1 title
-                Container(
+                Padding(
                   padding: const EdgeInsets.all(16),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Cards and accounts",
-                    style: TextStyle(
-                      color: MyColors.foreground,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Cards and accounts",
+                        style: TextStyle(
+                          color: MyColors.foreground,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const Icon(Icons.add),
+                    ],
                   ),
                 ),
                 ListView.builder(
@@ -123,24 +128,29 @@ class AccountsScreen extends StatelessWidget {
             Column(
               children: [
                 //section 2 title
-                Container(
+                Padding(
                   padding: const EdgeInsets.all(16),
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      children: [
-                        Text(
-                          "Savings",
-                          style: TextStyle(
-                            color: MyColors.foreground,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Text(
+                              "Savings",
+                              style: TextStyle(
+                                color: MyColors.foreground,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Icon(Icons.arrow_drop_down),
+                          ],
                         ),
-                        const Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
+                      ),
+                      const Icon(Icons.add),
+                    ],
                   ),
                 ),
                 ListView.builder(
@@ -196,24 +206,29 @@ class AccountsScreen extends StatelessWidget {
             Column(
               children: [
                 //section 3 title
-                Container(
+                Padding(
                   padding: const EdgeInsets.all(16),
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      children: [
-                        Text(
-                          "Debts",
-                          style: TextStyle(
-                            color: MyColors.foreground,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Text(
+                              "Debts",
+                              style: TextStyle(
+                                color: MyColors.foreground,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Icon(Icons.arrow_drop_down),
+                          ],
                         ),
-                        const Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
+                      ),
+                      const Icon(Icons.add),
+                    ],
                   ),
                 ),
                 Container(
