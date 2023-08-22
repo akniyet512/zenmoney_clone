@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zenmoney_clone/resources/my_alerts.dart';
+import 'package:zenmoney_clone/services/cloud_firestore_services.dart';
 import 'package:zenmoney_clone/services/firebase_authorization_services.dart';
 import 'package:zenmoney_clone/ui/navigations/main_navigation.dart';
 
@@ -9,23 +10,34 @@ class AuthoriationNotifier {
       await FirebaseAuthorizationServices.signInWithGoogle()
           .then((userCredential) async {
         if (userCredential != null) {
-          Navigator.of(context)
-              .pushReplacementNamed(MainNavigationRouteNames.main);
+          await CloudFirestoreServices.checkUserExists(
+                  uid: userCredential.user!.uid)
+              .then((isUserExists) async {
+            if (isUserExists) {
+              await Navigator.of(context)
+                  .pushReplacementNamed(MainNavigationRouteNames.main);
+            } else {
+              await CloudFirestoreServices.setUserData(
+                uid: userCredential.user!.uid,
+                email: userCredential.user!.email!,
+                appMode: 0,
+              ).whenComplete(() async {
+                await Navigator.of(context)
+                    .pushReplacementNamed(MainNavigationRouteNames.main);
+              });
+            }
+          });
         } else {
-          await MyAlerts.showTextDialog(
+          MyAlerts.showSnakBar(
             context,
-            title: "Alert",
-            content: "Can't find such google account!",
-            buttonText: "OK",
+            title: "Can't find such google account!",
           );
         }
       });
     } catch (e) {
-      await MyAlerts.showTextDialog(
+      MyAlerts.showSnakBar(
         context,
-        title: "Alert",
-        content: "Something went wrong: $e",
-        buttonText: "OK",
+        title: "Something went wrong: $e",
       );
     }
   }

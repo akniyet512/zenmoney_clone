@@ -20,70 +20,107 @@ class _ScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ForgotPasswordNotifier? model =
-        NotifierProvider.watch<ForgotPasswordNotifier>(context);
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                onTap: () => model?.navigateBack(context),
-                child: const Icon(Icons.close),
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Regain access",
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.w300,
-                color: MyColors.foreground,
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Enter email you used to register. We will send the new password to the email.",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w300,
-                color: MyColors.foreground,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              alignment: Alignment.centerLeft,
-              child: TextField(
-                controller: model?.emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: MyColors.indigo),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: MyColors.indigo),
-                  ),
-                  suffixIcon: Icon(
-                    Icons.email,
-                    color: MyColors.indigo,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const _SendButtonWidget(),
+          _GoBackWidget(),
+          _TitleWidget(),
+          _SubtitleWidget(),
+          _EmailTextFieldWidget(),
+          _SendButtonWidget(),
         ],
+      ),
+    );
+  }
+}
+
+class _GoBackWidget extends StatelessWidget {
+  const _GoBackWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        alignment: Alignment.centerLeft,
+        child: GestureDetector(
+          onTap: () => NotifierProvider.read<ForgotPasswordNotifier>(context)
+              ?.navigateBack(context),
+          child: const Icon(Icons.close),
+        ),
+      ),
+    );
+  }
+}
+
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Regain access",
+        style: TextStyle(
+          fontSize: 36,
+          fontWeight: FontWeight.w300,
+          color: MyColors.foreground,
+        ),
+      ),
+    );
+  }
+}
+
+class _SubtitleWidget extends StatelessWidget {
+  const _SubtitleWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Enter email you used to register. We will send the new password to the email.",
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w300,
+          color: MyColors.foreground,
+        ),
+      ),
+    );
+  }
+}
+
+class _EmailTextFieldWidget extends StatelessWidget {
+  const _EmailTextFieldWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    final ForgotPasswordNotifier? model =
+        NotifierProvider.watch<ForgotPasswordNotifier>(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        alignment: Alignment.centerLeft,
+        child: TextField(
+          controller: model?.emailController,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            labelText: 'Email',
+            labelStyle: TextStyle(color: MyColors.indigo),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: MyColors.indigo),
+            ),
+            suffixIcon: Icon(
+              Icons.email,
+              color: MyColors.indigo,
+            ),
+          ),
+        ),
       ),
     );
   }

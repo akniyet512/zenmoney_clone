@@ -14,14 +14,14 @@ class ForgotPasswordNotifier extends ChangeNotifier {
       await FirebaseAuthorizationServices.resetPassword(
               email: emailController.text)
           .whenComplete(() {
-        //TODO: SNACKBAR AND PUSH REPLACEMENT
+        MyAlerts.showSnakBar(context,
+            title: "Link has been sent to your email!");
+        Navigator.of(context).pop();
       });
     } catch (e) {
-      await MyAlerts.showTextDialog(
+      MyAlerts.showSnakBar(
         context,
-        title: "Alert",
-        content: "Something went wrong: $e",
-        buttonText: "OK",
+        title: "Something went wrong: $e",
       );
     }
   }
