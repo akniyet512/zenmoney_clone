@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
 
 class MyAlerts {
   MyAlerts._();
@@ -13,7 +15,7 @@ class MyAlerts {
         duration: const Duration(
             seconds: 3), 
         action: SnackBarAction(
-          label: 'CLOSE',
+          label: MultiLanguages.of(context)!.translate(LocalKeys.close),
           onPressed: () {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           },

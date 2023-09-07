@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
 import 'package:zenmoney_clone/resources/my_colors.dart';
 import 'package:zenmoney_clone/resources/my_images.dart';
 import 'package:zenmoney_clone/ui/screens/authorization/authorization_notifier.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
 import 'package:zenmoney_clone/utilities/provider.dart';
 
 class AuthorizationScreen extends StatelessWidget {
@@ -94,7 +96,8 @@ class _GoogleButtonWidget extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                "Sign in with Google",
+                MultiLanguages.of(context)!
+                    .translate(LocalKeys.signInWithGoogle),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -134,7 +137,7 @@ class _CreateAccountButtonWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
             alignment: Alignment.center,
             child: Text(
-              "Create an account",
+              MultiLanguages.of(context)!.translate(LocalKeys.createAccount),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -161,7 +164,7 @@ class _LoginAccountButtonWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Already have an account?",
+            MultiLanguages.of(context)!.translate(LocalKeys.alreadyHaveAccount),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -173,7 +176,7 @@ class _LoginAccountButtonWidget extends StatelessWidget {
                 await Provider.read<AuthoriationNotifier>(context)
                     ?.navigateToSignIn(context),
             child: Text(
-              "Sign in",
+              MultiLanguages.of(context)!.translate(LocalKeys.signIn),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

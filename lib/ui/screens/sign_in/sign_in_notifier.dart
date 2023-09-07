@@ -38,6 +38,7 @@ class SignInNotifier extends ChangeNotifier {
     } catch (e) {
       _isAuthProgress = false;
       notifyListeners();
+      if (!context.mounted) return;
       MyAlerts.showSnakBar(
         context,
         title: e.toString(),

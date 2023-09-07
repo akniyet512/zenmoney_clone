@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
 import 'package:zenmoney_clone/resources/my_alerts.dart';
 import 'package:zenmoney_clone/services/cloud_firestore_services.dart';
 import 'package:zenmoney_clone/services/firebase_authorization_services.dart';
 import 'package:zenmoney_clone/ui/navigations/main_navigation.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
 
 class SignUpNotifier extends ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
@@ -81,52 +83,58 @@ class SignUpNotifier extends ChangeNotifier {
   }
 
   Future<void> signUpWithEmailAndPassword(BuildContext context) async {
-    if (_isAgreementSelected) {
-      if (_isEmailFormatted(emailController.text)) {
-        if (_isStrongPassword(passwordController.text)) {
-          _isAuthProgress = true;
-          notifyListeners();
-          try {
-            await FirebaseAuthorizationServices.signUpUserWithEmailAndPassword(
-              email: emailController.text,
-              password: passwordController.text,
-            ).then((uid) async {
-              await CloudFirestoreServices.setUserData(
-                uid: uid,
-                email: emailController.text,
-                appMode: 0,
-              ).whenComplete(() async {
-                _isAuthProgress = false;
-                notifyListeners();
-                await Navigator.of(context)
-                    .pushReplacementNamed(MainNavigationRouteNames.main);
-              });
-            });
-          } catch (e) {
-            _isAuthProgress = false;
-            notifyListeners();
-            MyAlerts.showSnakBar(
-              context,
-              title: e.toString(),
-            );
-          }
-        } else {
-          MyAlerts.showSnakBar(
-            context,
-            title:
-                "Password should contain at least 8 charachters, at least 1 lower case charachter,  at least 1 upper case charachter,  at least 1 numerical charachter.",
-          );
-        }
-      } else {
-        MyAlerts.showSnakBar(
-          context,
-          title: "Please enter correct email!",
-        );
-      }
-    } else {
+    _isAuthProgress = true;
+    notifyListeners();
+    if (!_isAgreementSelected) {
       MyAlerts.showSnakBar(
         context,
-        title: "You have to select agreement!",
+        title: MultiLanguages.of(context)!
+            .translate(LocalKeys.haveToSelectAgreement),
+      );
+    }
+    if (!_isEmailFormatted(emailController.text)) {
+      MyAlerts.showSnakBar(
+        context,
+        title:
+            MultiLanguages.of(context)!.translate(LocalKeys.enterCorrectEmail),
+      );
+    }
+    if (!_isStrongPassword(passwordController.text)) {
+      MyAlerts.showSnakBar(
+        context,
+        title: MultiLanguages.of(context)!
+            .translate(LocalKeys.passwordShouldContain),
+      );
+    }
+    try {
+      await FirebaseAuthorizationServices.signUpUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      ).then((uid) async {
+        await CloudFirestoreServices.setUserData(
+          uid: uid,
+          email: emailController.text,
+          appMode: 0,
+        ).whenComplete(() async {
+          await CloudFirestoreServices.createAccount(
+            uid: uid,
+            name: MultiLanguages.of(context)!.translate(LocalKeys.cash),
+            amount: 0,
+          ).whenComplete(() async {
+            _isAuthProgress = false;
+            notifyListeners();
+            await Navigator.of(context)
+                .pushReplacementNamed(MainNavigationRouteNames.main);
+          });
+        });
+      });
+    } catch (e) {
+      _isAuthProgress = false;
+      notifyListeners();
+      if (!context.mounted) return;
+      MyAlerts.showSnakBar(
+        context,
+        title: e.toString(),
       );
     }
   }

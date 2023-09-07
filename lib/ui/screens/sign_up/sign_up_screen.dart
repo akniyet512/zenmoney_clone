@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
 import 'package:zenmoney_clone/resources/my_colors.dart';
 import 'package:zenmoney_clone/ui/screens/sign_up/sign_up_notifier.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
 import 'package:zenmoney_clone/utilities/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -68,7 +70,7 @@ class _TitleWidget extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         alignment: Alignment.centerLeft,
         child: Text(
-          "Account set-up",
+          MultiLanguages.of(context)!.translate(LocalKeys.accountSetup),
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.w300,
@@ -94,7 +96,7 @@ class _EmailTextFieldWidget extends StatelessWidget {
         controller: model?.emailController,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          labelText: 'Email',
+          labelText: MultiLanguages.of(context)!.translate(LocalKeys.email),
           labelStyle: TextStyle(color: MyColors.indigo),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: MyColors.indigo),
@@ -126,7 +128,8 @@ class _PasswordTextFieldWidget extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           obscureText: model?.isObscure ?? true,
           decoration: InputDecoration(
-            labelText: 'Password',
+            labelText:
+                MultiLanguages.of(context)!.translate(LocalKeys.password),
             labelStyle: TextStyle(color: MyColors.indigo),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: MyColors.indigo),
@@ -165,64 +168,65 @@ class _AgreementWidget extends StatelessWidget {
             activeColor: MyColors.indigo,
             onChanged: (value) => model!.setAgreementSelected(value!),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+          Expanded(
+            child: RichText(
+              text: TextSpan(
                 children: [
-                  Text(
-                    "I agree to the ",
+                  TextSpan(
+                    text: MultiLanguages.of(context)!
+                        .translate(LocalKeys.privacyText1),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w300,
                       color: MyColors.foreground,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () async =>
-                        await model?.launchPrivacyPolicyUrl(context),
-                    child: Text(
-                      "privacy policy",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                        color: MyColors.indigo,
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 2,
+                  WidgetSpan(
+                    child: GestureDetector(
+                      onTap: () async =>
+                          await model?.launchPrivacyPolicyUrl(context),
+                      child: Text(
+                        MultiLanguages.of(context)!
+                            .translate(LocalKeys.privacyText2),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                          color: MyColors.indigo,
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 2,
+                        ),
                       ),
                     ),
                   ),
-                  Text(
-                    " and ",
+                  TextSpan(
+                    text: MultiLanguages.of(context)!
+                        .translate(LocalKeys.privacyText3),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w300,
                       color: MyColors.foreground,
                     ),
                   ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () async =>
-                        await model?.launchUserAgreementUrl(context),
-                    child: Text(
-                      "user agreement",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                        color: MyColors.indigo,
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 2,
+                  WidgetSpan(
+                    child: GestureDetector(
+                      onTap: () async =>
+                          await model?.launchUserAgreementUrl(context),
+                      child: Text(
+                        MultiLanguages.of(context)!
+                            .translate(LocalKeys.privacyText4),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                          color: MyColors.indigo,
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 2,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ],
       ),
@@ -266,7 +270,7 @@ class _SignUpButtonWidget extends StatelessWidget {
                     ),
                   )
                 : Text(
-                    "Sign up",
+                    MultiLanguages.of(context)!.translate(LocalKeys.signUp),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

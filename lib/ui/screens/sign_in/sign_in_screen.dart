@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
 import 'package:zenmoney_clone/resources/my_colors.dart';
 import 'package:zenmoney_clone/ui/screens/sign_in/sign_in_notifier.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
 import 'package:zenmoney_clone/utilities/provider.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -68,7 +70,7 @@ class _TitleWidget extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         alignment: Alignment.centerLeft,
         child: Text(
-          "Sign in",
+          MultiLanguages.of(context)!.translate(LocalKeys.signIn),
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.w300,
@@ -94,7 +96,7 @@ class _EmailTextFieldWidget extends StatelessWidget {
         controller: model?.emailController,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          labelText: 'Email',
+          labelText: MultiLanguages.of(context)!.translate(LocalKeys.email),
           labelStyle: TextStyle(color: MyColors.indigo),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: MyColors.indigo),
@@ -126,7 +128,8 @@ class _PasswordTextFieldWidget extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           obscureText: model?.isObscure ?? true,
           decoration: InputDecoration(
-            labelText: 'Password',
+            labelText:
+                MultiLanguages.of(context)!.translate(LocalKeys.password),
             labelStyle: TextStyle(color: MyColors.indigo),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: MyColors.indigo),
@@ -160,7 +163,7 @@ class _ForgetPasswordWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Forget password?",
+            MultiLanguages.of(context)!.translate(LocalKeys.forgotPassword),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -172,7 +175,7 @@ class _ForgetPasswordWidget extends StatelessWidget {
                 await NotifierProvider.read<SignInNotifier>(context)
                     ?.navigateToForgotPassword(context),
             child: Text(
-              "Reset",
+              MultiLanguages.of(context)!.translate(LocalKeys.reset),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -224,7 +227,7 @@ class _SignInButtonWidget extends StatelessWidget {
                     ),
                   )
                 : Text(
-                    "Sign in",
+                    MultiLanguages.of(context)!.translate(LocalKeys.signIn),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

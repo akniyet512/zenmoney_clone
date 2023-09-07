@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
 import 'package:zenmoney_clone/resources/my_alerts.dart';
 import 'package:zenmoney_clone/services/cloud_firestore_services.dart';
 import 'package:zenmoney_clone/services/firebase_authorization_services.dart';
 import 'package:zenmoney_clone/ui/navigations/main_navigation.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
 
 class AuthoriationNotifier {
   Future<void> signInWithGoogle(BuildContext context) async {
@@ -22,22 +24,29 @@ class AuthoriationNotifier {
                 email: userCredential.user!.email!,
                 appMode: 0,
               ).whenComplete(() async {
-                await Navigator.of(context)
-                    .pushReplacementNamed(MainNavigationRouteNames.main);
+                await CloudFirestoreServices.createAccount(
+                  uid: userCredential.user!.uid,
+                  name: MultiLanguages.of(context)!.translate(LocalKeys.cash),
+                  amount: 0,
+                ).whenComplete(() async {
+                  await Navigator.of(context)
+                      .pushReplacementNamed(MainNavigationRouteNames.main);
+                });
               });
             }
           });
         } else {
           MyAlerts.showSnakBar(
             context,
-            title: "Can't find such google account!",
+            title: MultiLanguages.of(context)!.translate(LocalKeys.noGoogleAccount),
           );
         }
       });
     } catch (e) {
+      if (!context.mounted) return;
       MyAlerts.showSnakBar(
         context,
-        title: "Something went wrong: $e",
+        title: "${MultiLanguages.of(context)!.translate(LocalKeys.somethingWrong)}: $e",
       );
     }
   }

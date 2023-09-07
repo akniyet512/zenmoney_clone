@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
 import 'package:zenmoney_clone/resources/my_colors.dart';
 import 'package:zenmoney_clone/ui/screens/forgot_password/forgot_password_notifier.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
 import 'package:zenmoney_clone/utilities/provider.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
@@ -63,7 +65,7 @@ class _TitleWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       alignment: Alignment.centerLeft,
       child: Text(
-        "Regain access",
+        MultiLanguages.of(context)!.translate(LocalKeys.regainAccess),
         style: TextStyle(
           fontSize: 36,
           fontWeight: FontWeight.w300,
@@ -83,7 +85,7 @@ class _SubtitleWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       alignment: Alignment.centerLeft,
       child: Text(
-        "Enter email you used to register. We will send the new password to the email.",
+        MultiLanguages.of(context)!.translate(LocalKeys.enterEmailYouUsed),
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w300,
@@ -110,7 +112,7 @@ class _EmailTextFieldWidget extends StatelessWidget {
           controller: model?.emailController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'Email',
+            labelText: MultiLanguages.of(context)!.translate(LocalKeys.email),
             labelStyle: TextStyle(color: MyColors.indigo),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: MyColors.indigo),
@@ -152,7 +154,7 @@ class _SendButtonWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
             alignment: Alignment.center,
             child: Text(
-              "Send",
+              MultiLanguages.of(context)!.translate(LocalKeys.send),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

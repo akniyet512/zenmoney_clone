@@ -15,6 +15,26 @@ class CloudFirestoreServices {
     );
   }
 
+  static Future<void> createAccount({
+    required String uid,
+    required String name,
+    required double amount,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("accounts")
+        .doc()
+        .set(
+      {
+        "name": name,
+        "amount": amount,
+        "created": DateTime.now(),
+      },
+      SetOptions(merge: true),
+    );
+  }
+
   static Future<Map<String, dynamic>> getAppParameters() async {
     DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection("app")

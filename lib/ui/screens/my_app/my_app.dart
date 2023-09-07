@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:zenmoney_clone/ui/navigations/main_navigation.dart';
 import 'package:zenmoney_clone/ui/screens/my_app/my_app_model.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
+import 'package:zenmoney_clone/utilities/provider.dart';
 
 class MyApp extends StatelessWidget {
-  final MyAppModel myAppModel;
-
-  const MyApp({
-    super.key,
-    required this.myAppModel,
-  });
+  const MyApp({super.key});
 
   static final MainNavigation _mainNavigation = MainNavigation();
 
   @override
   Widget build(BuildContext context) {
+    final MyAppModel model = NotifierProvider.watch<MyAppModel>(context)!;
     return MaterialApp(
+      title: "ZenMoney",
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [
@@ -28,7 +29,28 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: _mainNavigation.routes,
       onGenerateRoute: _mainNavigation.onGenerateRoute,
-      initialRoute: _mainNavigation.initialRoute(myAppModel.isAuth),
+      initialRoute: _mainNavigation.initialRoute(model.isAuth),
+      locale: model.locale,
+      supportedLocales: model.locales,
+      localizationsDelegates: const [
+        MultiLanguages.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        if (model.isLoading == true && model.mySharedPreferences != null) {
+          for (var supportedLocaleLanguage in supportedLocales) {
+            if (supportedLocaleLanguage.languageCode == locale?.languageCode &&
+                supportedLocaleLanguage.countryCode == locale?.countryCode) {
+              model.mySharedPreferences!
+                  .setString("localeKey", locale!.languageCode);
+              return supportedLocaleLanguage;
+            }
+          }
+        }
+        return null;
+      },
     );
   }
 }
