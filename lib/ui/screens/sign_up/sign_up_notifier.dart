@@ -120,6 +120,9 @@ class SignUpNotifier extends ChangeNotifier {
             uid: uid,
             name: MultiLanguages.of(context)!.translate(LocalKeys.cash),
             amount: 0,
+            currency: "T",
+            isBeforeCurrency: true,
+            accountId: "main",
           ).whenComplete(() async {
             _isAuthProgress = false;
             notifyListeners();

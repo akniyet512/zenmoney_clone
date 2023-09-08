@@ -6,9 +6,13 @@ import 'package:zenmoney_clone/services/firebase_authorization_services.dart';
 import 'package:zenmoney_clone/ui/navigations/main_navigation.dart';
 import 'package:zenmoney_clone/utilities/multilanguages.dart';
 
-class AuthoriationNotifier {
+class AuthoriationNotifier extends ChangeNotifier {
+  bool _isAuthProgress = false;
+  bool get isAuthProgress => _isAuthProgress;
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
+      _isAuthProgress = true;
+      notifyListeners();
       await FirebaseAuthorizationServices.signInWithGoogle()
           .then((userCredential) async {
         if (userCredential != null) {
@@ -28,6 +32,9 @@ class AuthoriationNotifier {
                   uid: userCredential.user!.uid,
                   name: MultiLanguages.of(context)!.translate(LocalKeys.cash),
                   amount: 0,
+                  currency: "T",
+                  isBeforeCurrency: true,
+                  accountId: "main",
                 ).whenComplete(() async {
                   await Navigator.of(context)
                       .pushReplacementNamed(MainNavigationRouteNames.main);
@@ -36,17 +43,23 @@ class AuthoriationNotifier {
             }
           });
         } else {
+          _isAuthProgress = false;
+          notifyListeners();
           MyAlerts.showSnakBar(
             context,
-            title: MultiLanguages.of(context)!.translate(LocalKeys.noGoogleAccount),
+            title: MultiLanguages.of(context)!
+                .translate(LocalKeys.noGoogleAccount),
           );
         }
       });
     } catch (e) {
+      _isAuthProgress = false;
+      notifyListeners();
       if (!context.mounted) return;
       MyAlerts.showSnakBar(
         context,
-        title: "${MultiLanguages.of(context)!.translate(LocalKeys.somethingWrong)}: $e",
+        title:
+            "${MultiLanguages.of(context)!.translate(LocalKeys.somethingWrong)}: $e",
       );
     }
   }

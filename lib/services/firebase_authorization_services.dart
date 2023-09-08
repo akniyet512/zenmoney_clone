@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthorizationServices {
-  User? get currentUser => FirebaseAuth.instance.currentUser;
+  static User? get currentUser => FirebaseAuth.instance.currentUser;
 
   static bool? isGoogleSignIn = FirebaseAuth.instance.currentUser?.providerData
       .any((info) => info.providerId == "google.com");

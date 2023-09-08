@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zenmoney_clone/models/account_model.dart';
+import 'package:zenmoney_clone/services/firebase_authorization_services.dart';
 
 class CloudFirestoreServices {
   static Future<void> setUserData({
@@ -19,17 +21,22 @@ class CloudFirestoreServices {
     required String uid,
     required String name,
     required double amount,
+    required String currency,
+    required bool isBeforeCurrency,
+    String? accountId,
   }) async {
     await FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .collection("accounts")
-        .doc()
+        .doc(accountId)
         .set(
       {
         "name": name,
         "amount": amount,
         "created": DateTime.now(),
+        "currency": currency,
+        "isBeforeCurrency": isBeforeCurrency,
       },
       SetOptions(merge: true),
     );
@@ -50,5 +57,16 @@ class CloudFirestoreServices {
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
     return documentSnapshot.exists;
+  }
+
+  static Stream<List<AccountModel>> get getAccountModels {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuthorizationServices.currentUser!.uid)
+        .collection("accounts")
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs
+            .map((documentSnapshot) => AccountModel.fromDoc(documentSnapshot))
+            .toList());
   }
 }

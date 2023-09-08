@@ -26,4 +26,14 @@ class LocalKeys {
   static const String privacyText2 = "privacy_text2";
   static const String privacyText3 = "privacy_text3";
   static const String privacyText4 = "privacy_text4";
+  static const String accounts = "accounts";
+  static const String more = "more";
+  static const String analytics = "analytics";
+  static const String transactions = "transactions";
+  static const String debts = "debts";
+  static const String iOwe = "i_owe";
+  static const String oweMe = "owe_me";
+  static const String savings = "savings";
+  static const String cardsAndAccounts = "cards_and_accounts";
+  static const String balance = "balance";
 }

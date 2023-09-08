@@ -11,7 +11,7 @@ class AuthorizationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
+    return NotifierProvider(
       model: AuthoriationNotifier(),
       child: const _ScreenContent(),
     );
@@ -23,18 +23,50 @@ class _ScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthoriationNotifier model =
+        NotifierProvider.watch<AuthoriationNotifier>(context)!;
     return WillPopScope(
       onWillPop: () async => false,
-      child: const Scaffold(
+      child: Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
             children: [
-              _LogoWidget(),
-              _GoogleButtonWidget(),
-              _CreateAccountButtonWidget(),
-              _LoginAccountButtonWidget(),
+              const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _LogoWidget(),
+                  _GoogleButtonWidget(),
+                  _CreateAccountButtonWidget(),
+                  _LoginAccountButtonWidget(),
+                ],
+              ),
+              if (model.isAuthProgress) const _LoaderDialogWidget(),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LoaderDialogWidget extends StatelessWidget {
+  const _LoaderDialogWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: IntrinsicHeight(
+        child: IntrinsicWidth(
+          child: Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              color: MyColors.foreground,
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: Center(
+              child: CircularProgressIndicator(color: MyColors.primary),
+            ),
           ),
         ),
       ),
@@ -65,14 +97,15 @@ class _GoogleButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthoriationNotifier model =
+        NotifierProvider.watch<AuthoriationNotifier>(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 32,
         vertical: 8,
       ),
       child: GestureDetector(
-        onTap: () async => await Provider.read<AuthoriationNotifier>(context)
-            ?.signInWithGoogle(context),
+        onTap: () async => await model.signInWithGoogle(context),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(32),

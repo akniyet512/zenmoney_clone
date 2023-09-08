@@ -9,7 +9,7 @@ class MyAppModel extends ChangeNotifier{
   bool get isAuth => _isAuth;
 
   void checkOut()  {
-    _isAuth = FirebaseAuthorizationServices().currentUser != null;
+    _isAuth = FirebaseAuthorizationServices.currentUser != null;
   }
 
   Locale? locale;

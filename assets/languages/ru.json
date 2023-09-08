@@ -23,5 +23,15 @@
     "privacy_text1": "Я согласен с ",
     "privacy_text2": "политикой конфиденциальности",
     "privacy_text3": " и ",
-    "privacy_text4": "пользовательским соглашением"
+    "privacy_text4": "пользовательским соглашением",
+    "accounts": "Accounts",
+    "transactions":"Transactions",
+    "analytics":"Analytics",
+    "more":"More",
+    "debts": "Debts",
+    "i_owe": "I owe",
+    "owe_me": "Owe me",
+    "savings": "Savings",
+    "cards_and_accounts": "Cards and accounts",
+    "balance": "Balance"
 }

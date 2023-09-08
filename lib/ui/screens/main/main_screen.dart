@@ -1,56 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:zenmoney_clone/resources/local_keys.dart';
 import 'package:zenmoney_clone/resources/my_colors.dart';
-import 'package:zenmoney_clone/ui/screens/accounts/accounts_screen.dart';
-import 'package:zenmoney_clone/ui/screens/analytics/analytics_screen.dart';
-import 'package:zenmoney_clone/ui/screens/more/more_screen.dart';
-import 'package:zenmoney_clone/ui/screens/transactions_screen/transactions_screen.dart';
-//TODO
-class MainScreen extends StatefulWidget {
+import 'package:zenmoney_clone/ui/screens/main/main_notifier.dart';
+import 'package:zenmoney_clone/utilities/multilanguages.dart';
+import 'package:zenmoney_clone/utilities/provider.dart';
+
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  Widget build(BuildContext context) {
+    return NotifierProvider(
+      model: MainNotifier(),
+      child: const _ScreenContent(),
+    );
+  }
 }
 
-class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+class _ScreenContent extends StatelessWidget {
+  const _ScreenContent();
 
-  final List<Widget> _pages = [
-    const AccountsScreen(),
-    const TransactionsScreen(),
-    const AnalyticsScreen(),
-    const MoreScreen(),
-  ];
   @override
   Widget build(BuildContext context) {
+    final MainNotifier model =
+        NotifierProvider.watch<MainNotifier>(context)!;
     return Scaffold(
-      body: _pages[_currentIndex],
+      body: model.pages[model.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: MyColors.primary,
-        currentIndex: _currentIndex,
+        currentIndex: model.currentIndex,
         unselectedItemColor: MyColors.secondaryForeground,
         showUnselectedLabels: true,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
+        onTap: model.onBottomNavigationBarItemTap,
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.credit_card),
-            label: "Accounts",
+            icon: const Icon(Icons.credit_card),
+            label: MultiLanguages.of(context)!.translate(LocalKeys.accounts),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.swap_horiz),
-            label: "Transactions",
+            icon: const Icon(Icons.swap_horiz),
+            label:
+                MultiLanguages.of(context)!.translate(LocalKeys.transactions),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: "Analytics",
+            icon: const Icon(Icons.analytics),
+            label: MultiLanguages.of(context)!.translate(LocalKeys.analytics),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: "More",
+            icon: const Icon(Icons.menu),
+            label: MultiLanguages.of(context)!.translate(LocalKeys.more),
           ),
         ],
       ),
